@@ -1,9 +1,14 @@
 fn main() {
-    println!("Hello, world!");
+    let mut number = 3;
+    'outer_loop: loop{
+        if number == 0 {
+            println!("LIFTOFF!!");
+            break 'outer_loop;
+        } else {
+            println!("{}!", number);
+            number -= 1;
+        }
 
-    another_function(5);
+    }
 }
 
-fn another_function(x: i32) {
-    println!("The value of x is: {}", x);
-}
