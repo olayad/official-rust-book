@@ -4,11 +4,6 @@ fn main() {
     get_nth_fib()
 }
 
-fn get_nth_fib() {
-    let target: u32 = fib_input();
-    nth_fibonacci(0, 1, target, 1);
-}
-
 fn fib_input() -> u32 {
     println!("Enter the fib number:");
     let mut input :String = String::new();
@@ -18,18 +13,36 @@ fn fib_input() -> u32 {
     return input.trim().parse().unwrap();
 }
 
-fn nth_fibonacci(f0:u32, f1:u32, target: u32, count: u32) -> u32 {
-    println!("target:{}, count:{} f0:{}, f1:{}", target, count, f0, f1);
+fn get_nth_fib() {
+    let target: u32 = fib_input();
+    //nth_fibonacci_dom(0, 1, target, 1);
+    nth_fibonacci(0, 1, target);
+}
+
+// first DOM implementation
+fn nth_fibonacci_dom(second_last:u32, last:u32, target: u32, count: u32) -> u32 {
+    println!("target:{}, count:{} f0:{}, f1:{}", target, count, second_last, last);
     if target == 0 {
-        return f0
+        return second_last
     };
     if target == 1 {
-        return f1
+        return last
     };
     while count != target {
-        nth_fibonacci(f1, f1 + f0, target, count + 1);
-        println!("Resulting nth fib:{} for {}", f1+f0, target);
+        nth_fibonacci_dom(last, last + second_last, target, count + 1);
         break
     }
-    return f1 + f0
+    println!("Resulting nth fib:{} for {}", last +second_last, target);
+    return last + second_last
+}
+
+fn nth_fibonacci(mut second_last:u32, mut last:u32, target:u32) -> u32 {
+    if target <= 1 {
+        println!("Fib number is: {}", last);
+        return last
+    } else {
+        let new_last: u32 = second_last + last;
+        let _:u32 = nth_fibonacci(last, new_last, target-1);
+    }
+    return 0
 }
